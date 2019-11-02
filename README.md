@@ -22,7 +22,7 @@ Object.prototype.toString.call()
 注意
 Object.prototype.toString.call(new Person()) //[object Object]
 Object.prototype.toString.call(Object.create({})) //[object Object]
-Object.prototype.toString.call(window) //[object Window]
+Object.prototype.toString.call(window) //[object Window],但是处于兼容性考虑, 并没有用这个
 
 "纯粹的对象" plainObject = "{}" 或 "new Object()"创建的对象
 jq实例
@@ -43,6 +43,23 @@ console.log(Object.prototype.toString.call(Ctor)); // [object Function]
 发现返回的值并不一样，这是因为 hasOwn.toString 调用的其实是 Function.prototype.toString，毕竟 hasOwnProperty 可是一个函数！
 
 而且 Function 对象覆盖了从 Object 继承来的 Object.prototype.toString 方法。函数的 toString 方法会返回一个表示函数源代码的字符串。具体来说，包括 function关键字，形参列表，大括号，以及函数体中的内容。
+
+(3)拷贝
+简单粗暴 深拷贝数组 JSON.parse(JSON.stringify(arr))
+但是对于函数
+var arr = [function(){}, {b: function(){}}]
+var new_arr = JSON.parse(JSON.stringify(arr));
+console.log(new_arr);
+输出: [null, {}]
+
+如果对象是数组的情况
+const arr1 = ["a","s"]
+for (var key in arr1) {
+    if (arr1.hasOwnProperty(key)) {
+        console.log(key)
+    }
+}
+输出: 0,1
 
 ### topic3
 
