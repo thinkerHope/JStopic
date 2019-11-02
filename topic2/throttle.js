@@ -2,6 +2,7 @@
 
 let count = 1;
 const container = document.getElementById("container");
+const btn = document.getElementById("button");
 
 function getUserAction(e) { 
   container.innerHTML = count++;
@@ -59,7 +60,8 @@ const throttle = (func, wait, options={}) => {
   const throttled = function(...rest) {
     args = rest;
     context = this;
-    let now = (!previous && options.leading == false) ? 0 : (new Date().getTime());
+    let now = new Date().getTime();
+    (!previous && options.leading == false) && (previous = now);
     // 下次触发 func 剩余的时间
     let remaining = wait - (now - previous);
     // 如果修改系统时间可能出现 remaining > wait
@@ -76,7 +78,33 @@ const throttle = (func, wait, options={}) => {
     }
   }
 
+  throttled.cancel = () => {
+    clearTimeout(timeout);
+    previous = 0;
+    timeout = null;
+  }
+
   return throttled;
 }
-
-container.onmousemove = throttle(getUserAction, 1000, {leading: false});
+const setUserAction = throttle(getUserAction, 10000);
+container.onmousemove = setUserAction;
+// container.onmousemove = throttle(getUserAction, 1000, {trailing: false});
+// container.onmousemove = throttle(getUserAction, 1000, {leading: false});
+btn.addEventListener("click", setUserAction.cancel, false);
+// 补充一点, 节流函数的应用场景
+// 判断页面是否滚动到底部
+// 实际场景中可能是这样的：
+// 在滚动过程中，每隔一段时间在去计算这个判断逻辑
+$(window).on(
+  'scroll',
+  throttle(function() {
+    // 判断是否滚动到底部的逻辑
+    let pageHeight = $('body').height(),
+      scrollTop = $(window).scrollTop(),
+      winHeight = $(window).height(),
+      thresold = pageHeight - scrollTop - winHeight;
+    if (thresold > -100 && thresold <= 20) {
+      console.log('end');
+    }
+  })
+);
