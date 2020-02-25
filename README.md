@@ -2,6 +2,8 @@
 
 ## 补充说明
 
+### ES6专题为记录的一些ES6特性的运用场景
+
 ### topic1
 
 ### topic2
@@ -27,9 +29,8 @@ typeof new Date() === new Error()
 Object.prototype.toString.call(new Person()) //[object Object]
 Object.prototype.toString.call(Object.create({})) //[object Object]
 Object.prototype.toString.call(window) //[object Window]
+// 但是处于兼容性考虑, 并没有用这个
 ```
-
-但是处于兼容性考虑, 并没有用这个
 
 "纯粹的对象" plainObject = "{}" 或 "new Object()"创建的对象
 jq实例
@@ -148,6 +149,21 @@ console.log(c);
 ```
 
 结果无限展开
+
+(5)`Math.max(arr)`
+
+- 如果有任一参数不能被转换为数值，则结果为 NaN。
+- 如果没有参数，则结果为 `-Infinity` (注意是负无穷大)
+
+```js
+// 值得注意: null转化为数字时表示0, undefined为NaN
+Math.max(true, 0) // 1
+Math.max(true, '2', null) // 2
+Math.max(1, undefined) // NaN
+Math.max(1, {}) // NaN
+```
+
+
 
 ### topic3
 

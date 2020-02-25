@@ -2,7 +2,7 @@
 function uniqueOne(arr) {
   let res = [];
   let i,j;
-  let arrayLen,resLen;
+  let arrayLen, resLen;
 
   for(i = 0, arrayLen = arr.length; i < arrayLen; i++) {
     for(j = 0, resLen = res.length; j < resLen; j++) {
@@ -112,3 +112,23 @@ const uniqueWithMap = (arr) => {
 }
 let arr = [{value: 1}, {value: 2}, {value: 1}];
 console.log(uniqueWithSet(arr));
+
+const newArr = arr.reduce(function (prev, cur) {
+  prev.indexOf(cur) === -1 && prev.push(cur);
+  return prev;
+},[]);
+
+// includes
+function unique(arr) {
+  if (!Array.isArray(arr)) {
+      console.log('type error!')
+      return
+  }
+  var array =[];
+  for(var i = 0; i < arr.length; i++) {
+          if( !array.includes( arr[i]) ) {//includes 检测数组是否有某个值
+                  array.push(arr[i]);
+            }
+  }
+  return array
+}

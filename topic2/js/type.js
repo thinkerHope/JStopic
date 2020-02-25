@@ -13,5 +13,3 @@ function baseType(obj) {
 // 可以来一波封装了...
 const isFunction = (obj) => baseType(obj) === "function"
 const isArray = Array.isArray || ((obj) => baseType(obj) === "array");
-
-
