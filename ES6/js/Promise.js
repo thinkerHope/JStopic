@@ -37,8 +37,12 @@ function NewPromise(fn) {
     this.then(null, onRejected)
   }
 
-  this.finally = function() {
-
+  this.finally = function(callback) {
+    let P = this.constructor
+    return this.then(
+      value  => P.resolve(callback()).then(() => value),
+      reason => P.resolve(callback()).then(() => { throw reason })
+    )
   }
 
   function resolve(newValue) {
