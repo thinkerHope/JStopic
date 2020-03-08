@@ -1,7 +1,5 @@
-import style from './style.less'
 import { Subject, race, timer } from 'rxjs'
 import { switchMap, filter, mapTo, scan, map } from 'rxjs/operators'
-
 // touch 在移动端无法区分滚动和点击(click可), 因此需要在move里判断滑动距离是否大于5px
 const mapXY = map(e => {
     if (!e.touches.length) return { e }
